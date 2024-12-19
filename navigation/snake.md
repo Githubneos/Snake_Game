@@ -184,6 +184,38 @@ permalink: /snake/
         border: none;
         border-radius: 3px;
     }
+
+    /* Add these styles for the leaderboard */
+    .stats-card {
+        background: rgba(255, 255, 255, 0.1);
+        border-radius: 15px;
+        padding: 20px;
+        text-align: center;
+        backdrop-filter: blur(5px);
+        transition: transform 0.3s ease;
+        margin-bottom: 15px;
+    }
+
+    .stats-card:hover {
+        transform: translateY(-5px);
+        background: rgba(255, 255, 255, 0.15);
+    }
+
+    .stats-card h3 {
+        color: #fff;
+        font-size: 1.2rem;
+        margin-bottom: 10px;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+    }
+
+    .score-value {
+        color: #23d5ab;
+        font-size: 2rem;
+        font-weight: bold;
+        margin: 0;
+        text-shadow: 0 0 10px rgba(35, 213, 171, 0.5);
+    }
 </style>
 
 <!-- New Navigation Bar -->
@@ -221,6 +253,28 @@ permalink: /snake/
     <header class="pb-3 mb-4 border-bottom border-primary text-dark">
         <p class="fs-4">Score: <span id="score_value">0</span></p>
     </header>
+    <div class="container mb-4">
+        <div class="row">
+            <div class="col-md-4">
+                <div class="stats-card">
+                    <h3>High Score</h3>
+                    <p class="score-value" id="highScore">0</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="stats-card">
+                    <h3>Last Score</h3>
+                    <p class="score-value" id="lastScore">0</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="stats-card">
+                    <h3>Games Played</h3>
+                    <p class="score-value" id="gamesPlayed">0</p>
+                </div>
+            </div>
+        </div>
+    </div>
     <div class="container bg-secondary" style="text-align:center;">
         <!-- Main Menu -->
         <div id="menu" class="py-4 text-light">
@@ -255,13 +309,8 @@ permalink: /snake/
                 <input id="walloff" type="radio" name="wall" value="0"/>
                 <label for="walloff">Off</label>
             </p>
-            <p>Snake Color:
-                <input id="snakeColor" type="color" value="#FFFFFF" class="color-picker"/>
-                <label for="snakeColor">Choose snake color</label>
-            </p>
-            <p>Food Color:
-                <input id="foodColor" type="color" value="#FF0000" class="color-picker"/>
-                <label for="foodColor">Choose food color</label>
+            <p>
+                <button class="btn btn-danger" onclick="resetStats()">Reset Statistics</button>
             </p>
         </div>
     </div>
@@ -306,6 +355,10 @@ permalink: /snake/
         const size_setting = document.getElementsByName("size");
         const snake_color_picker = document.getElementById("snakeColor");
         const food_color_picker = document.getElementById("foodColor");
+        // Add these variables with the other game attributes
+        let highScore = localStorage.getItem('snakeHighScore') || 0;
+        let gamesPlayed = localStorage.getItem('snakeGamesPlayed') || 0;
+        let lastScore = localStorage.getItem('snakeLastScore') || 0;
         /* Display Control */
         /////////////////////////////////////////////////////////////
         // 0 for the game
@@ -322,6 +375,23 @@ permalink: /snake/
                     screen_game_over.style.display = "none";
                     break;
                 case SCREEN_GAME_OVER:
+                    // Update last score
+                    lastScore = score;
+                    localStorage.setItem('snakeLastScore', lastScore);
+                    
+                    // Update high score
+                    if (score > highScore) {
+                        highScore = score;
+                        localStorage.setItem('snakeHighScore', highScore);
+                    }
+                    
+                    // Update games played
+                    gamesPlayed++;
+                    localStorage.setItem('snakeGamesPlayed', gamesPlayed);
+                    
+                    // Update display
+                    updateStats();
+                    
                     screen_snake.style.display = "block";
                     screen_menu.style.display = "none";
                     screen_setting.style.display = "none";
@@ -390,6 +460,8 @@ permalink: /snake/
                     }
                 });
             }
+            // Initialize stats display
+            updateStats();
         }
         /* Snake is on the Go (Driver Function)  */
         /////////////////////////////////////////////////////////////
@@ -561,6 +633,24 @@ permalink: /snake/
             wall = wall_value;
             if(wall === 0){screen_snake.style.borderColor = "#606060";}
             if(wall === 1){screen_snake.style.borderColor = "#FFFFFF";}
+        }
+        /////////////////////////////////////////////////////////////
+        // Add a reset stats function (optional - add a reset button in settings)
+        function resetStats() {
+            highScore = 0;
+            gamesPlayed = 0;
+            lastScore = 0;
+            localStorage.setItem('snakeHighScore', highScore);
+            localStorage.setItem('snakeGamesPlayed', gamesPlayed);
+            localStorage.setItem('snakeLastScore', lastScore);
+            updateStats();
+        }
+        /////////////////////////////////////////////////////////////
+        // Add this function to update the stats display
+        function updateStats() {
+            document.getElementById('highScore').textContent = highScore;
+            document.getElementById('lastScore').textContent = lastScore;
+            document.getElementById('gamesPlayed').textContent = gamesPlayed;
         }
     })();
 </script>
