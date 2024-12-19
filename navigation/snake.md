@@ -5,9 +5,36 @@ permalink: /snake/
 ---
 
 <style>
-
-    body{
+    body {
+        background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
+        background-size: 400% 400%;
+        animation: gradientBG 15s ease infinite;
+        min-height: 100vh;
+        margin: 0;
+        padding: 20px;
     }
+
+    @keyframes gradientBG {
+        0% {
+            background-position: 0% 50%;
+        }
+        50% {
+            background-position: 100% 50%;
+        }
+        100% {
+            background-position: 0% 50%;
+        }
+    }
+
+    /* Update container styling to stand out better */
+    .container {
+        background: rgba(0, 0, 0, 0.8);
+        border-radius: 15px;
+        padding: 20px;
+        box-shadow: 0 0 30px rgba(0, 0, 0, 0.5);
+        backdrop-filter: blur(10px);
+    }
+
     .wrap{
         margin-left: auto;
         margin-right: auto;
@@ -145,6 +172,11 @@ permalink: /snake/
         let food = {x: 0, y: 0};
         let score;
         let wall;
+        let snakeColor = "#FFFFFF";
+        let foodColor = "#FF0000";
+        const size_setting = document.getElementsByName("size");
+        const snake_color_picker = document.getElementById("snakeColor");
+        const food_color_picker = document.getElementById("foodColor");
         /* Display Control */
         /////////////////////////////////////////////////////////////
         // 0 for the game
@@ -211,6 +243,24 @@ permalink: /snake/
                 if(evt.code === "Space" && SCREEN !== SCREEN_SNAKE)
                     newGame();
             }, true);
+            // Snake color
+            snake_color_picker.addEventListener("change", function(e) {
+                snakeColor = e.target.value;
+            });
+            // Food color
+            food_color_picker.addEventListener("change", function(e) {
+                foodColor = e.target.value;
+            });
+            // Snake size
+            for(let i = 0; i < size_setting.length; i++){
+                size_setting[i].addEventListener("click", function(){
+                    for(let i = 0; i < size_setting.length; i++){
+                        if(size_setting[i].checked){
+                            BLOCK = parseInt(size_setting[i].value);
+                        }
+                    }
+                });
+            }
         }
         /* Snake is on the Go (Driver Function)  */
         /////////////////////////////////////////////////////////////
@@ -268,8 +318,25 @@ permalink: /snake/
             }
             // Repaint canvas
             ctx.beginPath();
-            ctx.fillStyle = "royalblue";
+            // Create gradient background
+            let gradient = ctx.createLinearGradient(0, 0, canvas.width, canvas.height);
+            gradient.addColorStop(0, 'rgba(30,50,100,1)');
+            gradient.addColorStop(1, 'rgba(60,80,150,1)');
+            ctx.fillStyle = gradient;
             ctx.fillRect(0, 0, canvas.width, canvas.height);
+            // Add subtle grid pattern
+            ctx.strokeStyle = 'rgba(255,255,255,0.1)';
+            ctx.lineWidth = 0.5;
+            for(let i = 0; i < canvas.width; i += BLOCK) {
+                ctx.beginPath();
+                ctx.moveTo(i, 0);
+                ctx.lineTo(i, canvas.height);
+                ctx.stroke();
+                ctx.beginPath();
+                ctx.moveTo(0, i);
+                ctx.lineTo(canvas.width, i);
+                ctx.stroke();
+            }
             // Paint snake
             for(let i = 0; i < snake.length; i++){
                 activeDot(snake[i].x, snake[i].y);
@@ -327,8 +394,8 @@ permalink: /snake/
         }
         /* Dot for Food or Snake part */
         /////////////////////////////////////////////////////////////
-        let activeDot = function(x, y){
-            ctx.fillStyle = "#FFFFFF";
+        let activeDot = function(x, y, isFood = false){
+            ctx.fillStyle = isFood ? foodColor : snakeColor;
             ctx.fillRect(x * BLOCK, y * BLOCK, BLOCK, BLOCK);
         }
         /* Random food placement */
