@@ -163,6 +163,27 @@ permalink: /snake/
         color: white;
         cursor: pointer;
     }
+
+    /* Add these styles for the color pickers */
+    .color-picker {
+        -webkit-appearance: none;
+        padding: 0;
+        width: 50px;
+        height: 25px;
+        margin: 0 10px;
+        border: 2px solid white;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+
+    .color-picker::-webkit-color-swatch-wrapper {
+        padding: 0;
+    }
+
+    .color-picker::-webkit-color-swatch {
+        border: none;
+        border-radius: 3px;
+    }
 </style>
 
 <!-- New Navigation Bar -->
@@ -233,6 +254,14 @@ permalink: /snake/
                 <label for="wallon">On</label>
                 <input id="walloff" type="radio" name="wall" value="0"/>
                 <label for="walloff">Off</label>
+            </p>
+            <p>Snake Color:
+                <input id="snakeColor" type="color" value="#FFFFFF" class="color-picker"/>
+                <label for="snakeColor">Choose snake color</label>
+            </p>
+            <p>Food Color:
+                <input id="foodColor" type="color" value="#FF0000" class="color-picker"/>
+                <label for="foodColor">Choose food color</label>
             </p>
         </div>
     </div>
