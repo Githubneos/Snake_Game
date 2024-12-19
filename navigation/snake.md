@@ -93,7 +93,107 @@ permalink: /snake/
         background-color: #FFF;
         color: #000;
     }
+
+    /* New Navigation Bar Styles */
+    .nav-custom {
+        background: rgba(0, 0, 0, 0.8);
+        backdrop-filter: blur(10px);
+        padding: 1rem;
+        margin-bottom: 2rem;
+        border-radius: 15px;
+        box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    }
+
+    .nav-custom .navbar-brand {
+        color: #fff;
+        font-weight: bold;
+        font-size: 1.5rem;
+        transition: all 0.3s ease;
+    }
+
+    .nav-custom .navbar-brand:hover {
+        color: #23d5ab;
+        transform: scale(1.05);
+    }
+
+    .nav-custom .nav-link {
+        color: #fff;
+        margin: 0 10px;
+        padding: 8px 16px;
+        border-radius: 8px;
+        transition: all 0.3s ease;
+    }
+
+    .nav-custom .nav-link:hover {
+        background: rgba(255, 255, 255, 0.1);
+        color: #23d5ab;
+        transform: translateY(-2px);
+    }
+
+    .search-form {
+        position: relative;
+    }
+
+    .search-form input {
+        background: rgba(255, 255, 255, 0.1);
+        border: none;
+        border-radius: 20px;
+        padding: 8px 20px;
+        color: white;
+        transition: all 0.3s ease;
+    }
+
+    .search-form input:focus {
+        background: rgba(255, 255, 255, 0.2);
+        box-shadow: 0 0 15px rgba(35, 213, 171, 0.3);
+        outline: none;
+    }
+
+    .search-form input::placeholder {
+        color: rgba(255, 255, 255, 0.7);
+    }
+
+    .search-form button {
+        position: absolute;
+        right: 10px;
+        top: 50%;
+        transform: translateY(-50%);
+        background: none;
+        border: none;
+        color: white;
+        cursor: pointer;
+    }
 </style>
+
+<!-- New Navigation Bar -->
+<nav class="navbar navbar-expand-lg nav-custom">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="/">🎮 Game Hub</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav me-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="/home">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/blog">Blog</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link active" href="/games">Games</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/about">About</a>
+                </li>
+            </ul>
+            <form class="search-form d-flex">
+                <input class="form-control" type="search" placeholder="Search..." aria-label="Search">
+                <button type="submit">🔍</button>
+            </form>
+        </div>
+    </div>
+</nav>
 
 <h2>Snake</h2>
 <div class="container">
