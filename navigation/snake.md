@@ -6,12 +6,13 @@ permalink: /snake/
 
 <style>
     body {
-        background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
+        background: linear-gradient(-45deg, #165B33, #146B3A, #EA4630, #BB2528);
         background-size: 400% 400%;
         animation: gradientBG 15s ease infinite;
         min-height: 100vh;
         margin: 0;
         padding: 20px;
+        overflow: hidden;
     }
 
     @keyframes gradientBG {
@@ -26,13 +27,53 @@ permalink: /snake/
         }
     }
 
-    /* Update container styling to stand out better */
+    .snowflake {
+        color: #fff;
+        font-size: 1em;
+        font-family: Arial, sans-serif;
+        text-shadow: 0 0 5px #000;
+        position: fixed;
+        top: -10%;
+        z-index: 9999;
+        user-select: none;
+        cursor: default;
+        animation-name: snowflakes-fall, snowflakes-shake;
+        animation-duration: 10s, 3s;
+        animation-timing-function: linear, ease-in-out;
+        animation-iteration-count: infinite, infinite;
+        animation-play-state: running, running;
+    }
+
+    @keyframes snowflakes-fall {
+        0% { top: -10%; }
+        100% { top: 100%; }
+    }
+
+    @keyframes snowflakes-shake {
+        0%, 100% { transform: translateX(0); }
+        50% { transform: translateX(80px); }
+    }
+
+    .snowflake:nth-of-type(1) { left: 10%; animation-delay: 0s, 0s; }
+    .snowflake:nth-of-type(2) { left: 20%; animation-delay: 1s, 1s; }
+    .snowflake:nth-of-type(3) { left: 30%; animation-delay: 2s, 0.5s; }
+    .snowflake:nth-of-type(4) { left: 40%; animation-delay: 3s, 1.5s; }
+    .snowflake:nth-of-type(5) { left: 50%; animation-delay: 4s, 0.5s; }
+    .snowflake:nth-of-type(6) { left: 60%; animation-delay: 5s, 1s; }
+    .snowflake:nth-of-type(7) { left: 70%; animation-delay: 6s, 2s; }
+    .snowflake:nth-of-type(8) { left: 80%; animation-delay: 7s, 1s; }
+    .snowflake:nth-of-type(9) { left: 90%; animation-delay: 8s, 1.5s; }
+    .snowflake:nth-of-type(10) { left: 25%; animation-delay: 9s, 0s; }
+    .snowflake:nth-of-type(11) { left: 65%; animation-delay: 10s, 2.5s; }
+    .snowflake:nth-of-type(12) { left: 85%; animation-delay: 11s, 1.5s; }
+
     .container {
         background: rgba(0, 0, 0, 0.8);
         border-radius: 15px;
         padding: 20px;
-        box-shadow: 0 0 30px rgba(0, 0, 0, 0.5);
+        box-shadow: 0 0 30px rgba(187, 37, 40, 0.5);
         backdrop-filter: blur(10px);
+        border: 2px solid rgba(255, 255, 255, 0.1);
     }
 
     .wrap{
@@ -187,7 +228,8 @@ permalink: /snake/
 
     /* Add these styles for the leaderboard */
     .stats-card {
-        background: rgba(255, 255, 255, 0.1);
+        background: rgba(22, 91, 51, 0.3);
+        border: 1px solid rgba(255, 255, 255, 0.1);
         border-radius: 15px;
         padding: 20px;
         text-align: center;
@@ -247,6 +289,22 @@ permalink: /snake/
         </div>
     </div>
 </nav>
+
+<!-- Add snowflakes HTML right after the body tag -->
+<div class="snowflakes" aria-hidden="true">
+    <div class="snowflake">❅</div>
+    <div class="snowflake">❆</div>
+    <div class="snowflake">❅</div>
+    <div class="snowflake">❆</div>
+    <div class="snowflake">❅</div>
+    <div class="snowflake">❆</div>
+    <div class="snowflake">❅</div>
+    <div class="snowflake">❆</div>
+    <div class="snowflake">❅</div>
+    <div class="snowflake">❆</div>
+    <div class="snowflake">❅</div>
+    <div class="snowflake">❆</div>
+</div>
 
 <h2>Snake</h2>
 <div class="container">
